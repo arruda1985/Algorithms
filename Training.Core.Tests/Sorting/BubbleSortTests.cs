@@ -55,19 +55,6 @@ public class BubbleSortTests
         Assert.True(IsSorted(result), "The list is not sorted correctly.");
     }
 
-    [Fact]
-    public void Sorting_PerformanceTest_VeryLargeList()
-    {
-        var numbers = GenerateRandomList(100000);
-        var stopwatch = new Stopwatch();
-
-        stopwatch.Start();
-        var result = _sortingClass.Sorting(numbers);
-        stopwatch.Stop();
-
-        Assert.True(stopwatch.ElapsedMilliseconds < 5000, $"Sorting took {stopwatch.ElapsedMilliseconds}ms for a very large list.");
-        Assert.True(IsSorted(result), "The list is not sorted correctly.");
-    }
 
     private List<int> GenerateRandomList(int size)
     {

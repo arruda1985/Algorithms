@@ -7,14 +7,17 @@ namespace Training.Core.Sorting
         public int[] Sorting(List<int> numbers)
         {
             var n = numbers.Count;
-            for (int i = 0; i < n -1; i++)
-            {
 
-                if (numbers[i + 1] > numbers[i])
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = 0; j < n - 1; j++)
                 {
-                    var temp = numbers[i];
-                    numbers[i] = numbers[i + 1];
-                    numbers[i + 1] = temp;
+                    if (numbers[j] > numbers[j + 1])
+                    {
+                        var temp = numbers[j];
+                        numbers[j] = numbers[j + 1];
+                        numbers[j + 1] = temp;
+                    }
                 }
             }
 

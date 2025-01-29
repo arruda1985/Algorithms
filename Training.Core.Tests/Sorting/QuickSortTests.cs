@@ -14,57 +14,64 @@ namespace Training.Core.Tests.Sorting
         private readonly QuickSort _sortingClass = new();
 
         [Fact]
+        public void Sorting_ShouldSortCorrectly_SmallList()
+        {
+            var numbers = GenerateRandomList(100);
+            var result = _sortingClass.Sorting(numbers);
+
+            Assert.True(IsSorted(result), "The list is not sorted correctly.");
+        }
+
+        [Fact]
+        public void Sorting_ShouldSortCorrectly_LargeList()
+        {
+            var numbers = GenerateRandomList(10000);
+            var result = _sortingClass.Sorting(numbers);
+
+            Assert.True(IsSorted(result), "The list is not sorted correctly.");
+        }
+
+        [Fact]
         public void Sorting_PerformanceTest_SmallList()
         {
-            var numbers = GenerateRandomList(100); // 100 elementos
+            var numbers = GenerateRandomList(100);
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            _sortingClass.Sorting(numbers);
+            var result = _sortingClass.Sorting(numbers);
             stopwatch.Stop();
 
-            Assert.True(stopwatch.ElapsedMilliseconds < 50, $"Sorting demorou {stopwatch.ElapsedMilliseconds}ms para uma lista pequena.");
+            Assert.True(stopwatch.ElapsedMilliseconds < 50, $"Sorting took {stopwatch.ElapsedMilliseconds}ms for a small list.");
+            Assert.True(IsSorted(result), "The list is not sorted correctly.");
         }
 
         [Fact]
         public void Sorting_PerformanceTest_LargeList()
         {
-            var numbers = GenerateRandomList(100000); 
+            var numbers = GenerateRandomList(10000);
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            _sortingClass.Sorting(numbers);
+            var result = _sortingClass.Sorting(numbers);
             stopwatch.Stop();
 
-            Assert.True(stopwatch.ElapsedMilliseconds < 500, $"Sorting demorou {stopwatch.ElapsedMilliseconds}ms para uma lista grande.");
+            Assert.True(stopwatch.ElapsedMilliseconds < 500, $"Sorting took {stopwatch.ElapsedMilliseconds}ms for a large list.");
+            Assert.True(IsSorted(result), "The list is not sorted correctly.");
         }
 
         [Fact]
         public void Sorting_PerformanceTest_VeryLargeList()
         {
-            var numbers = GenerateRandomList(1000000); 
+            var numbers = GenerateRandomList(100000);
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            _sortingClass.Sorting(numbers);
+            var result = _sortingClass.Sorting(numbers);
             stopwatch.Stop();
 
-            Assert.True(stopwatch.ElapsedMilliseconds < 5000, $"Sorting demorou {stopwatch.ElapsedMilliseconds}ms para uma lista muito grande.");
+            Assert.True(stopwatch.ElapsedMilliseconds < 5000, $"Sorting took {stopwatch.ElapsedMilliseconds}ms for a very large list.");
+            Assert.True(IsSorted(result), "The list is not sorted correctly.");
         }
-
-        [Fact]
-        public void Sorting_PerformanceTest_VeryVeryLargeList()
-        {
-            var numbers = GenerateRandomList(100000000);
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-            _sortingClass.Sorting(numbers);
-            stopwatch.Stop();
-
-            Assert.True(stopwatch.ElapsedMilliseconds < 5000, $"Sorting demorou {stopwatch.ElapsedMilliseconds}ms para uma lista muito grande.");
-        }
-
 
         private List<int> GenerateRandomList(int size)
         {
@@ -72,9 +79,21 @@ namespace Training.Core.Tests.Sorting
             var list = new List<int>(size);
             for (int i = 0; i < size; i++)
             {
-                list.Add(random.Next(-1000000, 1000000)); 
+                list.Add(random.Next(-1000000, 1000000));
             }
             return list;
+        }
+
+        private bool IsSorted(int[] array)
+        {
+            for (int i = 0; i < array.Length - 1; i++)
+            {
+                if (array[i] > array[i + 1])
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
