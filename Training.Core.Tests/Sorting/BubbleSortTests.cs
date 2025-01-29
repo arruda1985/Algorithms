@@ -29,7 +29,7 @@ namespace Training.Core.Tests.Sorting
         [Fact]
         public void Sorting_PerformanceTest_LargeList()
         {
-            var numbers = GenerateRandomList(100000); // 100.000 elementos
+            var numbers = GenerateRandomList(100000); 
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
@@ -42,7 +42,7 @@ namespace Training.Core.Tests.Sorting
         [Fact]
         public void Sorting_PerformanceTest_VeryLargeList()
         {
-            var numbers = GenerateRandomList(1000000); // 1 milhão de elementos
+            var numbers = GenerateRandomList(1000000); 
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
@@ -52,13 +52,27 @@ namespace Training.Core.Tests.Sorting
             Assert.True(stopwatch.ElapsedMilliseconds < 5000, $"Sorting demorou {stopwatch.ElapsedMilliseconds}ms para uma lista muito grande.");
         }
 
+        [Fact]
+        public void Sorting_PerformanceTest_VeryVeryLargeList()
+        {
+            var numbers = GenerateRandomList(100000000);
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+            _sortingClass.Sorting(numbers);
+            stopwatch.Stop();
+
+            Assert.True(stopwatch.ElapsedMilliseconds < 5000, $"Sorting demorou {stopwatch.ElapsedMilliseconds}ms para uma lista muito grande.");
+        }
+
+
         private List<int> GenerateRandomList(int size)
         {
             var random = new Random();
             var list = new List<int>(size);
             for (int i = 0; i < size; i++)
             {
-                list.Add(random.Next(-1000000, 1000000)); // Números aleatórios entre -1.000.000 e 1.000.000
+                list.Add(random.Next(-1000000, 1000000)); 
             }
             return list;
         }
