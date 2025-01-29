@@ -2,79 +2,93 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Training.Core.Sorting;
+using Xunit;
 
-namespace Training.Core.Tests.Sorting
+public class BubbleSortTests
 {
-    public class BubbleSortTests
+    private readonly BubbleSort _sortingClass = new();
+
+    [Fact]
+    public void Sorting_ShouldSortCorrectly_SmallList()
     {
+        var numbers = GenerateRandomList(100);
+        var result = _sortingClass.Sorting(numbers);
 
-        private readonly BubbleSort _sortingClass = new();
+        Assert.True(IsSorted(result), "The list is not sorted correctly.");
+    }
 
-        [Fact]
-        public void Sorting_PerformanceTest_SmallList()
+    [Fact]
+    public void Sorting_ShouldSortCorrectly_LargeList()
+    {
+        var numbers = GenerateRandomList(10000);
+        var result = _sortingClass.Sorting(numbers);
+
+        Assert.True(IsSorted(result), "The list is not sorted correctly.");
+    }
+
+    [Fact]
+    public void Sorting_PerformanceTest_SmallList()
+    {
+        var numbers = GenerateRandomList(100);
+        var stopwatch = new Stopwatch();
+
+        stopwatch.Start();
+        var result = _sortingClass.Sorting(numbers);
+        stopwatch.Stop();
+
+        Assert.True(stopwatch.ElapsedMilliseconds < 50, $"Sorting took {stopwatch.ElapsedMilliseconds}ms for a small list.");
+        Assert.True(IsSorted(result), "The list is not sorted correctly.");
+    }
+
+    [Fact]
+    public void Sorting_PerformanceTest_LargeList()
+    {
+        var numbers = GenerateRandomList(10000);
+        var stopwatch = new Stopwatch();
+
+        stopwatch.Start();
+        var result = _sortingClass.Sorting(numbers);
+        stopwatch.Stop();
+
+        Assert.True(stopwatch.ElapsedMilliseconds < 500, $"Sorting took {stopwatch.ElapsedMilliseconds}ms for a large list.");
+        Assert.True(IsSorted(result), "The list is not sorted correctly.");
+    }
+
+    [Fact]
+    public void Sorting_PerformanceTest_VeryLargeList()
+    {
+        var numbers = GenerateRandomList(100000);
+        var stopwatch = new Stopwatch();
+
+        stopwatch.Start();
+        var result = _sortingClass.Sorting(numbers);
+        stopwatch.Stop();
+
+        Assert.True(stopwatch.ElapsedMilliseconds < 5000, $"Sorting took {stopwatch.ElapsedMilliseconds}ms for a very large list.");
+        Assert.True(IsSorted(result), "The list is not sorted correctly.");
+    }
+
+    private List<int> GenerateRandomList(int size)
+    {
+        var random = new Random();
+        var list = new List<int>(size);
+        for (int i = 0; i < size; i++)
         {
-            var numbers = GenerateRandomList(100); // 100 elementos
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-            _sortingClass.Sorting(numbers);
-            stopwatch.Stop();
-
-            Assert.True(stopwatch.ElapsedMilliseconds < 50, $"Sorting demorou {stopwatch.ElapsedMilliseconds}ms para uma lista pequena.");
+            list.Add(random.Next(-1000000, 1000000));
         }
+        return list;
+    }
 
-        [Fact]
-        public void Sorting_PerformanceTest_LargeList()
+    private bool IsSorted(int[] array)
+    {
+        for (int i = 0; i < array.Length - 1; i++)
         {
-            var numbers = GenerateRandomList(100000); 
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-            _sortingClass.Sorting(numbers);
-            stopwatch.Stop();
-
-            Assert.True(stopwatch.ElapsedMilliseconds < 500, $"Sorting demorou {stopwatch.ElapsedMilliseconds}ms para uma lista grande.");
-        }
-
-        [Fact]
-        public void Sorting_PerformanceTest_VeryLargeList()
-        {
-            var numbers = GenerateRandomList(1000000); 
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-            _sortingClass.Sorting(numbers);
-            stopwatch.Stop();
-
-            Assert.True(stopwatch.ElapsedMilliseconds < 5000, $"Sorting demorou {stopwatch.ElapsedMilliseconds}ms para uma lista muito grande.");
-        }
-
-        [Fact]
-        public void Sorting_PerformanceTest_VeryVeryLargeList()
-        {
-            var numbers = GenerateRandomList(100000000);
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-            _sortingClass.Sorting(numbers);
-            stopwatch.Stop();
-
-            Assert.True(stopwatch.ElapsedMilliseconds < 5000, $"Sorting demorou {stopwatch.ElapsedMilliseconds}ms para uma lista muito grande.");
-        }
-
-
-        private List<int> GenerateRandomList(int size)
-        {
-            var random = new Random();
-            var list = new List<int>(size);
-            for (int i = 0; i < size; i++)
+            if (array[i] > array[i + 1])
             {
-                list.Add(random.Next(-1000000, 1000000)); 
+                return false;
             }
-            return list;
         }
+        return true;
     }
 }
