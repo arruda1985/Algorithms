@@ -24,7 +24,15 @@ namespace Training.Core.NeetCode
 
         public int[] TopKFrequent(int[] nums, int k)
         {
-            throw new NotImplementedException();
+            var dic = new Dictionary<int, int>();
+
+            for (int i = 0; i<= nums.Length -1; i++)
+                if (dic.TryGetValue(nums[i], out var found))
+                    dic[nums[i]]++;
+                else
+                    dic.Add(nums[i], 1);
+
+            return dic.OrderByDescending(dic => dic.Value).Take(k).Select(s=> s.Key).ToArray();
         }
     }
 }
