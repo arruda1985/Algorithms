@@ -49,6 +49,32 @@
 
             Assert.Equal(1, result[0]);
         }
+
+        [Fact]
+        public void ProductOfArrayExceptSelf()
+        {
+            var nums = new List<int> { 1, 2, 4, 6 };
+
+            var result = _neetCode.ProductOfArrayExceptSelf([.. nums]);
+
+            Assert.Equal(48, result[0]);
+            Assert.Equal(24, result[1]);
+            Assert.Equal(12, result[2]);
+            Assert.Equal(8, result[3]);
+        }
+
+        [Fact]
+        public void ProductOfArrayExceptSelfWithZero()
+        {
+            var nums = new List<int> { -1, 0, 1, 2, 3 };
+
+            var result = _neetCode.ProductOfArrayExceptSelf([.. nums]);
+
+            Assert.Equal(0, result[0]);
+            Assert.Equal(-6, result[1]);
+            Assert.Equal(0, result[2]);
+            Assert.Equal(0, result[3]);
+        }
     }
 
 }

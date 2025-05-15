@@ -22,6 +22,32 @@ namespace Training.Core.NeetCode
             return new List<List<string>>(result.Values);
         }
 
+
+        public int[] ProductOfArrayExceptSelf(int[] nums)
+        {
+            int n = nums.Length;
+            var output = new int[n];
+
+            var product = 1;
+            var zeroIndex = -1;
+
+            for (int i = 0; i < n; i++)
+            {
+                if (nums[i] != 0)
+                    product = product  * nums[i];
+                else zeroIndex = i;
+            }
+
+            for (int i = 0; i < n; i++)
+                if (nums[i] == 0)
+                    output[i] = 0;
+                else
+                    output[i] = product / nums[i];
+
+
+            return output;
+        }
+
         public int[] TopKFrequent(int[] nums, int k)
         {
             var dic = new Dictionary<int, int>();
