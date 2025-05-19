@@ -1,9 +1,23 @@
-﻿using Training.Core.Contracts;
+﻿using System.Text;
+using Training.Core.Contracts;
 
 namespace Training.Core.NeetCode
 {
     public class NeetCode : INeetCode
     {
+        public bool hasDuplicate(int[] nums)
+        {
+            var hash = new List<int>();
+
+            for (int i = 0; i<=nums.Length -1; i++)
+            {
+                if (hash.Exists(h => h == nums[i]))
+                    return true;
+            }
+            return false;
+        }
+
+
         public List<List<string>> GroupAnagrams(string[] strs)
         {
             var result = new Dictionary<string, List<string>>();
@@ -48,6 +62,47 @@ namespace Training.Core.NeetCode
             return output;
         }
 
+        public string Encode(IList<string> strs)
+        {
+            var encoded = new StringBuilder();
+
+            foreach (var s in strs)
+            {
+                if (s == "") encoded.Append("0|");
+                else encoded.Append($"{s.Length}|{s}");
+            }
+
+            return encoded.ToString();
+        }
+
+        public List<string> Decode(string s)
+        {
+            var decoded = new List<string>();
+
+            for (int i = 0; i<= s.Length -1; i++)
+            {
+                if (s[i] == '|' && IsNumber(s[i-1]))
+                {
+                    var size = int.Parse(s[i-1].ToString());
+                    if (size == 0) decoded.Add("");
+                    else
+                    {
+                        var word = s.Substring(i+1, size);
+                        decoded.Add(word);
+                    }
+                }
+            }
+
+            return decoded;
+        }
+
+        private static bool IsNumber(char v)
+        {
+            var numbers = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+
+            return numbers.Contains(int.Parse(v.ToString()));
+        }
+
         public int[] TopKFrequent(int[] nums, int k)
         {
             var dic = new Dictionary<int, int>();
@@ -58,7 +113,7 @@ namespace Training.Core.NeetCode
                 else
                     dic.Add(nums[i], 1);
 
-            return dic.OrderByDescending(dic => dic.Value).Take(k).Select(s=> s.Key).ToArray();
+            return dic.OrderByDescending(dic => dic.Value).Take(k).Select(s => s.Key).ToArray();
         }
     }
 }

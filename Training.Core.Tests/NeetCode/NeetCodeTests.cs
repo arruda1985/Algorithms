@@ -75,6 +75,38 @@
             Assert.Equal(0, result[2]);
             Assert.Equal(0, result[3]);
         }
+        [Fact]
+        public void EncodeDecode()
+        {
+            var s = new List<string>() { "neet", "code", "love", "you" };
+            var encoded = _neetCode.Encode(s);
+
+            var decoded = _neetCode.Decode(encoded);
+
+            Assert.Equal(s, decoded);
+        }
+
+        [Fact]
+        public void EncodeDecodeVazio()
+        {
+            var s = new List<string>() { "" };
+            var encoded = _neetCode.Encode(s);
+
+            var decoded = _neetCode.Decode(encoded);
+
+            Assert.Equal(s, decoded);
+        }
+
+        [Fact]
+        public void EncodeDecodeCharacteresEspeciais()
+        {
+            var s = new List<string>() { "we","say",":","yes","!@#$%^&*()" };
+            var encoded = _neetCode.Encode(s);
+
+            var decoded = _neetCode.Decode(encoded);
+
+            Assert.Equal(s, decoded);
+        }
     }
 
 }
