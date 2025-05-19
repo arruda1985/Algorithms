@@ -100,12 +100,22 @@
         [Fact]
         public void EncodeDecodeCharacteresEspeciais()
         {
-            var s = new List<string>() { "we","say",":","yes","!@#$%^&*()" };
+            var s = new List<string>() { "we", "say", ":", "yes", "!@#$%^&*()" };
             var encoded = _neetCode.Encode(s);
 
             var decoded = _neetCode.Decode(encoded);
 
             Assert.Equal(s, decoded);
+        }
+
+        [Theory]
+        [InlineData("({[]})", true)]
+        [InlineData("[(])", false)]
+        public void ValidParentheses(string s, bool expectedResult)
+        {
+            var result = _neetCode.ValidParentheses(s);
+
+            Assert.Equal(expectedResult, result);
         }
     }
 

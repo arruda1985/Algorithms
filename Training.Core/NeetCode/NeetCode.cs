@@ -79,17 +79,23 @@ namespace Training.Core.NeetCode
         {
             var decoded = new List<string>();
 
+            var actualSize = string.Empty;
+
             for (int i = 0; i<= s.Length -1; i++)
             {
-                if (s[i] == '|' && IsNumber(s[i-1]))
+                if (s[i] != '|')
+                    actualSize += s[i];
+                else
                 {
-                    var size = int.Parse(s[i-1].ToString());
+                    var size = int.Parse(actualSize);
                     if (size == 0) decoded.Add("");
                     else
                     {
                         var word = s.Substring(i+1, size);
+                        i += size;
                         decoded.Add(word);
                     }
+                    actualSize = string.Empty;
                 }
             }
 
@@ -114,6 +120,21 @@ namespace Training.Core.NeetCode
                     dic.Add(nums[i], 1);
 
             return dic.OrderByDescending(dic => dic.Value).Take(k).Select(s => s.Key).ToArray();
+        }
+
+        public bool ValidParentheses(string s)
+        {
+            var hashTable = new Dictionary<char, char>();
+
+            for (int i = 0; i <= s.Length; i++)
+            {
+                if (s[i] == '(' || s[i] == '{' || s[i] == '[')
+                {
+                }
+
+                
+            }
+            return false;
         }
     }
 }
